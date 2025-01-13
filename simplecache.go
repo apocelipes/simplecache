@@ -60,8 +60,8 @@ type Option struct {
 	MaxAge          *time.Duration
 }
 
-// NewSimpleCache creates and returns a new Cache
-func NewSimpleCache[T any](opts ...Option) *Cache[T] {
+// New creates and returns a new Cache
+func New[T any](opts ...Option) *Cache[T] {
 	sc := &Cache[T]{
 		items:           make(map[string]cacheEntry[T]),
 		mutex:           sync.Mutex{},

@@ -20,7 +20,7 @@ forever only being removed when the cache is full. Or some combination.
 # Usage
 
 ```go
-sc := NewSimpleCache[string]()
+sc := New[string]()
 
 _ = sc.Set("key-1", "some value"), Sample{})
 

@@ -33,7 +33,7 @@ func TestSimpleCache_GetNothing(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			sc := NewSimpleCache[Sample]()
+			sc := New[Sample]()
 
 			for i := 0; i < 1000; i++ {
 				_, ok := sc.Get(fmt.Sprintf("key-%d", i))
@@ -74,7 +74,7 @@ func TestSimpleCache_MaxItemsOption(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			sc := NewSimpleCache[Sample](Option{
+			sc := New[Sample](Option{
 				MaxItems: &tt.expectedCount,
 			})
 
@@ -106,7 +106,7 @@ func TestSimpleCache_Option(t *testing.T) {
 			oEs := 5
 			oMA := time.Nanosecond
 
-			_ = NewSimpleCache[Sample](Option{
+			_ = New[Sample](Option{
 				MaxItems:        &oEs,
 				EvictionPolicy:  &oEp,
 				EvictionSamples: &oEs,
@@ -201,7 +201,7 @@ func TestSimpleCache_DefaultSet(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			sc := NewSimpleCache[Sample]()
+			sc := New[Sample]()
 			for _, s := range tt.args.values {
 				_ = sc.Set(s.Key, s)
 			}
@@ -243,7 +243,7 @@ func TestSimpleCache_Expire(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			maxAge := time.Nanosecond
-			sc := NewSimpleCache[Sample](Option{
+			sc := New[Sample](Option{
 				MaxAge: &maxAge,
 			})
 			for _, s := range tt.args.values {
@@ -298,7 +298,7 @@ func TestSimpleCache_Delete(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			maxAge := time.Nanosecond
-			sc := NewSimpleCache[Sample](Option{
+			sc := New[Sample](Option{
 				MaxAge: &maxAge,
 			})
 			for _, s := range tt.args.values {
@@ -331,7 +331,7 @@ func TestSimpleCache_Clear(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			sc := NewSimpleCache[Sample]()
+			sc := New[Sample]()
 
 			for i := 0; i < 100; i++ {
 				_ = sc.Set(fmt.Sprintf("key-%d", i), Sample{})
@@ -346,7 +346,7 @@ func TestSimpleCache_Clear(t *testing.T) {
 func TestSimpleCache_LRU(t *testing.T) {
 	ep := LRU
 	mi := 5
-	sc := NewSimpleCache[int](Option{
+	sc := New[int](Option{
 		MaxItems:       &mi,
 		EvictionPolicy: &ep,
 	})
