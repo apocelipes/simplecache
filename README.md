@@ -19,8 +19,10 @@ forever only being removed when the cache is full. Or some combination.
 
 # Usage
 
+Import `github.com/boyter/simplecache`
+
 ```go
-sc := New[string]()
+sc := simplecache.New[string]()
 
 _ = sc.Set("key-1", "some value")
 
@@ -34,15 +36,18 @@ if ok {
 }
 ```
 
-You can configure the cache through the use of an option
+Note that a default cache has an limit of 100,000 items, once the next item is added beyond this limit 5 random 
+entries will be checked, and one of them removed based on the default LFU algorithm. 
+
+You can configure this through the use of options, as indicated below
 
 ```go
 oMi := 1000
-oEp := LRU
+oEp := simplecache.LRU
 oEs := 5
 oMA := time.Second * 60
 
-sc := New[Sample](Option{
+sc := simplecache.New[string](simplecache.Option{
     MaxItems:        &oMi, // max number of items the cache will hold, evicting on Set, nil for no limit
     EvictionPolicy:  &oEp, // Which eviction policy should be applied LRU or LFU
     EvictionSamples: &oEs, // How many random samples to take from the items to find the best to expire

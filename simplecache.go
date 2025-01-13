@@ -67,7 +67,7 @@ func New[T any](opts ...Option) *Cache[T] {
 	sc := &Cache[T]{
 		items:           make(map[string]cacheEntry[T]),
 		mutex:           sync.Mutex{},
-		maxItems:        0, // default indicates NO limits
+		maxItems:        100_000, // 0 indicates no limits
 		evictionPolicy:  LFU,
 		evictionSamples: 5,
 		maxAge:          nil, // by default no expiration
