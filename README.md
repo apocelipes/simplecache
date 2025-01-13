@@ -7,9 +7,9 @@ A simple cache implementation using Go generics.
 ## Why?
 
 While many excellent cache solutions exist, what I often want for smaller projects is a map, with some expiration 
-abilities over it. That is intended to full that role. This is because different types can have
+abilities over it. That is intended to fill that role. This is because different types can have
 different caching needs, such as a small group of items that should never expire, items that should exist in cache
-forever only being removed when the cache is full.
+forever only being removed when the cache is full. Or some combination.
 
 ### What isn't it
 
