@@ -34,6 +34,22 @@ if ok {
 }
 ```
 
+You can configure the cache through the use of an option
+
+```go
+oMi := 1000
+oEp := LRU
+oEs := 5
+oMA := time.Second * 60
+
+sc := New[Sample](Option{
+    MaxItems:        &oMi, // max number of items the cache will hold, evicting on Set, nil for no limit
+    EvictionPolicy:  &oEp, // Which eviction policy should be applied LRU or LFU
+    EvictionSamples: &oEs, // How many random samples to take from the items to find the best to expire
+    MaxAge:          &oMA, // Max age an item can live on Get when past this will be deleted, nil for no expiry
+})
+```
+
 # Benchmarks?
 
 I don't have any. It's a Go map with some locking. It should be fine. Being 5% faster or slower than any other
