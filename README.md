@@ -22,7 +22,7 @@ forever only being removed when the cache is full. Or some combination.
 ```go
 sc := New[string]()
 
-_ = sc.Set("key-1", "some value"), Sample{})
+_ = sc.Set("key-1", "some value")
 
 v, ok := sc.Get("key-1")
 if ok {
