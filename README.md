@@ -2,7 +2,7 @@
 
 [![Scc Count Badge](https://sloc.xyz/github/boyter/simplecache/)](https://github.com/boyter/simplecache/)
 
-A simple cache implementation using Go generics.
+A simple thread safe cache implementation using Go generics.
 
 ## Why?
 
@@ -10,6 +10,8 @@ While many excellent cache solutions exist, what I often want for smaller projec
 abilities over it. That is intended to fill that role. This is because different types can have
 different caching needs, such as a small group of items that should never expire, items that should exist in cache
 forever only being removed when the cache is full. Or some combination.
+
+Most operations should be `o(1)` as well as all being thread safe.
 
 ### What isn't it
 
