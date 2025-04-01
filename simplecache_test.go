@@ -369,3 +369,37 @@ func TestSimpleCache_LRU(t *testing.T) {
 
 	assert.False(t, ok)
 }
+
+func TestSimpleCache_NoExpiration(t *testing.T) {
+	minusExpire := -time.Hour
+	ep := LRU
+	mi := 5
+	sc := New[int](Option{
+		MaxItems:       &mi,
+		EvictionPolicy: &ep,
+		MaxAge:         &minusExpire,
+	})
+	for i := 0; i < 5; i++ {
+		_ = sc.Set(fmt.Sprintf("key-%d", i), i)
+	}
+	for i := 0; i < 5; i++ {
+		v, ok := sc.Get(fmt.Sprintf("key-%d", i))
+		assert.True(t, ok)
+		assert.Equal(t, v, i)
+	}
+
+	zeroExpire := time.Duration(0)
+	sc = New[int](Option{
+		MaxItems:       &mi,
+		EvictionPolicy: &ep,
+		MaxAge:         &zeroExpire,
+	})
+	for i := 0; i < 5; i++ {
+		_ = sc.Set(fmt.Sprintf("key-%d", i), i)
+	}
+	for i := 0; i < 5; i++ {
+		v, ok := sc.Get(fmt.Sprintf("key-%d", i))
+		assert.True(t, ok)
+		assert.Equal(t, v, i)
+	}
+}
